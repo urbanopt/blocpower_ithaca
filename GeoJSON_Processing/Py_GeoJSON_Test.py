@@ -7,33 +7,29 @@ input_data='test_data.csv'
 urbanopt_geojson_file='uo_test_file.json'
 input_geojson_file='input_test_file.json'
 
-#get list of IDs in the file 
-
-#apply the below chunk to all IDs in the CSV 
 
 data=pd.read_csv(input_data) 
 
 
 
 def read_data(geojson_file): 
-     #read in the GeoJSON data, add to it, and then write it out
      f = open(geojson_file, "r")   
      geojson=json.load(f)
      f.close()
      return geojson  
 
 #need to handle case when ID isn't present! 
-def process_item(ident, sys_type, geojson_file): #make that the list of IDs from the csv, each one is processed, get this called for each item in list 
+def process_item(ident, sys_type, geojson_file):  
     system=sys_type   
     geojson=read_data(geojson_file) 
-    print(ident)
-    print(type(ident)) 
     bldg= [obj for obj in geojson['features'] if obj['properties']['OBJECTID']== int(ident)]
-    print(bldg) 
-    bldg[0]['properties']['system_type']=system 
-    f = open(geojson_file, "w")
-    json.dump(geojson, f)
-    f.close()
+    if bldg: #make sure list isn't empty 
+        bldg[0]['properties']['system_type']=system 
+        f = open(geojson_file, "w")
+        json.dump(geojson, f)
+        f.close()
+    else:
+        print("ID not present in GeoJSON file") 
 
 geojson = read_data(input_geojson_file)
 output=[bldg['properties']['OBJECTID'] for bldg in geojson['features']]
