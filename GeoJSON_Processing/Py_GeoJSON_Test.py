@@ -22,20 +22,24 @@ def read_data(geojson_file):
      f.close()
      return geojson  
 
+#need to handle case when ID isn't present! 
 def process_item(ident, sys_type, geojson_file): #make that the list of IDs from the csv, each one is processed, get this called for each item in list 
     system=sys_type   
     geojson=read_data(geojson_file) 
-    bldg= [obj for obj in geojson['features'] if obj['properties']['id']== ident]
+    print(ident)
+    print(type(ident)) 
+    bldg= [obj for obj in geojson['features'] if obj['properties']['OBJECTID']== int(ident)]
+    print(bldg) 
     bldg[0]['properties']['system_type']=system 
     f = open(geojson_file, "w")
     json.dump(geojson, f)
     f.close()
 
 geojson = read_data(input_geojson_file)
-results = [process_item(row[0], row[1], urbanopt_geojson_file) for row in zip(data['id'], data['system_type'])] 
-output=[bldg['properties']['PARCELKEY'] for bldg in geojson['features']]
+output=[bldg['properties']['OBJECTID'] for bldg in geojson['features']]
 df = pd.DataFrame(output)
-
+df.to_csv('bldg_id_list.csv')
+results = [process_item(row[0], row[1], input_geojson_file) for row in zip(data['id'], data['system_type'])] 
 
 #loop thru the geojson data and the input data and update the geojson properties for each key in the input data file 
 
