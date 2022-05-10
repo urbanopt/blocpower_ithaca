@@ -2,56 +2,35 @@ import json
 import csv 
 import pandas as pd 
 
-#read csv 
-
+#Set names of input files 
 input_data='test_data.csv'
-geojson_file='Sample_UO_GeoJSON.json'
+geojson_file='test_file.json'
 
 #get list of IDs in the file 
 
 #apply the below chunk to all IDs in the CSV 
 
+data=pd.read_csv(input_data) 
 
-def read_data(input_data, geojson_file):
-     data=pd.read_csv(input_data) 
+
+def read_data(geojson_file): 
      #read in the GeoJSON data, add to it, and then write it out
-     f = open(geojson_file, "r") #will need to close it
-     #with open(geojson_file, 'a') as f:     
+     f = open(geojson_file, "r")   
      geojson=json.load(f)
      f.close()
+     return geojson  
 
-def process_item(item, geojson_file): #make that the list of IDs from the csv, each one is processed, get this called for each item in list 
+def process_item(ident, sys_type, geojson_file): #make that the list of IDs from the csv, each one is processed, get this called for each item in list 
+    system=sys_type   
+    geojson=read_data(geojson_file) 
+    bldg= [obj for obj in geojson['features'] if obj['properties']['id']== ident]
+    bldg[0]['properties']['system_type']=system 
     f = open(geojson_file, "w")
-    index=input_data.loc[input_data['id'] == item].index[0]
-    system=input_data['sys_type'][index]
-    bldg= [obj for obj in geojson if obj['properties']['id']==item]  
-    obj['properties']['system_type']=system
     json.dump(geojson, f)
     f.close()
 
-    #return result
+results = [process_item(row[0], row[1], geojson_file) for row in zip(data['id'], data['system_type'])] 
 
-#results = [process_item(item) for item in item_list]
-
-
-def write_data(geojson, geojson_file): 
-     f = open(geojson_file, "w")
-     print(geojson['features'][6]['properties']['system_type'])
-     print(geojson['features'][6]['properties']['id'])
-     geojson['features'][6]['properties']['system_type']='PTAC' #this worked successfully 
-     json.dump(geojson, f)
-     f.close()
-     
-      
-     
-     
-     
-     
-#def write_geojson(data, geojson):
 
 #loop thru the geojson data and the input data and update the geojson properties for each key in the input data file 
 
-read_data(input_data, geojson_file) 
-
-
-#call methods 
