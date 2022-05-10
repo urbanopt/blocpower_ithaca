@@ -11,6 +11,8 @@ import pandas as pd
 #To demonstrate the functionality of this script, one can add more ObjectIDs from the input GeoJSON to the 
 #input data CSV, with a corresponding HVAC system type, and run this script in Python to see the modification. 
 
+#The key used for identifying features ('ObjectID' in this cas) could easily be modified. 
+
 #Set names of input files 
 input_data='test_data.csv' #This file has feature IDs and names of their corresponding system types 
 urbanopt_geojson_file='uo_test_file.json' #A typical UO geojson file--not used in this example. 
