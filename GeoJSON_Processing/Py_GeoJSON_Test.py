@@ -26,7 +26,7 @@ def process_item(ident, sys_type, geojson_file):
     if bldg: #make sure list isn't empty 
         bldg[0]['properties']['system_type']=system 
         f = open(geojson_file, "w")
-        json.dump(geojson, f)
+        json.dump(geojson, f, indent=4, sort_keys=True)
         f.close()
     else:
         print("ID not present in GeoJSON file") 
