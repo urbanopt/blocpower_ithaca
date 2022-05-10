@@ -2,6 +2,12 @@ import json
 import csv 
 import pandas as pd 
 
+#This script takes a GeoJSON file as input, and demonstrates:
+#a) writing a list of identifiers of the features to a CSV 
+#b) modifying the original GeoJSON to add HVAC system types by feature ID, from an external CSV file. 
+#Note that in practice, the output of a) could be used to generate input for b). As an illustration, separate
+#files are used in this example. 
+
 #Set names of input files 
 input_data='test_data.csv' #This file has feature IDs and names of their corresponding system types 
 urbanopt_geojson_file='uo_test_file.json' #A typical UO geojson file--not used in this example. 
