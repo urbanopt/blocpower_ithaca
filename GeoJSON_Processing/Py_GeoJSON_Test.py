@@ -11,16 +11,8 @@ import pandas as pd
 #To demonstrate the functionality of this script, one can add more ObjectIDs from the input GeoJSON to the 
 #input data CSV, with a corresponding HVAC system type, and run this script in Python to see the modification. 
 
-#The key used for identifying features ('ObjectID' in this cas) could easily be modified. 
+#The key used for identifying features ('LocAddr' in this case) could easily be modified. 
 
-#Set names of input files 
-input_data='test_data.csv' #This file has feature IDs and names of their corresponding system types 
-urbanopt_geojson_file='uo_test_file.json' #A typical UO geojson file--not used in this example. 
-input_geojson_file='input_test_file.json' #A source GeoJSON file (this example is from Tompkins County) 
-
-
-#Read in input data 
-data=pd.read_csv(input_data) 
 
 
 def read_data(geojson_file): #Load a GeoJSON file 
@@ -42,16 +34,6 @@ def process_item(ident, sys_type, geojson_file):
     else:
         print("ID not present in GeoJSON file") 
 
-#Process data (for generating csv) 
-geojson = read_data(input_geojson_file) #Read in the input GeoJSON file 
 
-#Print the IDs of the features in the input file 
-output=[bldg['properties']['LOCADDR'] for bldg in geojson['features']] 
-df = pd.DataFrame(output)
-df.to_csv('bldg_id_list.csv')
-
-#Modify the sample GeoJSON file to add HVAC system types. As an illustration, this uses a separate input data file. 
-#As an illustration, this example includes one invalid GeoJSON ID in the test input CSV file. 
-results = [process_item(row[0], row[1], input_geojson_file) for row in zip(data['id'], data['system_type'])] 
 
 
