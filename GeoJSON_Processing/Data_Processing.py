@@ -1,7 +1,7 @@
 import pandas as pd 
 import Py_GeoJSON_Test 
-from Py_GeoJSON_Test import read_data
-from Py_GeoJSON_Test import process_item 
+from Py_GeoJSON import read_data
+from Py_GeoJSON import process_item 
 
 
 #read input files 
