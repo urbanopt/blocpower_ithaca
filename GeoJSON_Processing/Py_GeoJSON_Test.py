@@ -34,7 +34,7 @@ def read_data(geojson_file): #Load a GeoJSON file
 def process_item(ident, sys_type, geojson_file):  
     system=sys_type   
     geojson=read_data(geojson_file) 
-    bldg= [obj for obj in geojson['features'] if obj['properties']['OBJECTID']== int(ident)] #ObjectID is an identifier from the Tompkins County GeoJSON data 
+    bldg= [obj for obj in geojson['features'] if obj['properties']['LOCADDR']==(ident)] #ObjectID is an identifier from the Tompkins County GeoJSON data 
     if bldg: #make sure list isn't empty 
         bldg[0]['properties']['system_type']=system 
         f = open(geojson_file, "w")
