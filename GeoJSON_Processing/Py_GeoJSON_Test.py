@@ -18,7 +18,6 @@ input_data='test_data.csv' #This file has feature IDs and names of their corresp
 urbanopt_geojson_file='uo_test_file.json' #A typical UO geojson file--not used in this example. 
 input_geojson_file='input_test_file.json' #A source GeoJSON file (this example is from Tompkins County) 
 
-#use address to look up values 
 
 #Read in input data 
 data=pd.read_csv(input_data) 
