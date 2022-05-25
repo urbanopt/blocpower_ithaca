@@ -21,11 +21,13 @@ address=[bldg['properties']['LOCADDR'] for bldg in geojson['features']]
 floor_area=[bldg['properties']['SQ_FT'] for bldg in geojson['features']] 
 year_built=[bldg['properties']['YR_BUILT'] for bldg in geojson['features']] 
 stories=[bldg['properties']['STORIES'] for bldg in geojson['features']] 
+bldg_type=[bldg['properties']['DESCRIPTIO'] for bldg in geojson['features']] 
 output = pd.DataFrame(
     {'address': address,
      'floor_area': floor_area,
      'year_built': year_built,
-     'stories': stories
+     'stories': stories,
+     'bldg_type': bldg_type
     })
 output.to_csv('bldg_data_output.csv')
 
