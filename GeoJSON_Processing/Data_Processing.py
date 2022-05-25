@@ -1,5 +1,5 @@
 import pandas as pd 
-import Py_GeoJSON_Test 
+import Py_GeoJSON
 from Py_GeoJSON import read_data
 from Py_GeoJSON import process_item 
 
@@ -17,9 +17,15 @@ data=pd.read_csv(input_data)
 geojson = read_data(input_geojson_file) #Read in the input GeoJSON file 
 
 #Print the IDs of the features in the input file 
-output=[bldg['properties']['LOCADDR'] for bldg in geojson['features']] 
-df = pd.DataFrame(output)
-df.to_csv('bldg_id_list.csv')
+address=[bldg['properties']['LOCADDR'] for bldg in geojson['features']] 
+floor_area=[bldg['properties']['SQ_FT'] for bldg in geojson['features']] 
+output = pd.DataFrame(
+    {'address': address,
+     'floor_area': floor_area
+    })
+output.to_csv('bldg_data_output.csv')
+
+#generate a list of the floor area also 
 
 #Modify the sample GeoJSON file to add HVAC system types. As an illustration, this uses a separate input data file. 
 #As an illustration, this example includes one invalid GeoJSON ID in the test input CSV file. 
